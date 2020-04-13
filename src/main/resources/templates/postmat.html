@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>JanMat</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/home.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container-fluid">
+    <h1><img src="images/favicon.ico"/> Janmat - People's opinion for peoples benefit </h1>
+    <div class="container">
+        <form action="#" th:action="@{/postMat}" th:object="${mat}" method="post">
+            <div class="form-group">
+                <input class="form-control" id="nameinput" list="names" th:field="*{city}"
+                       placeholder="Please enter name of your city correctly"/>
+                <datalist id="names">
+                    <option th:each="row : ${status}" th:value="${row.city}"
+                            th:label="${ row.district + ', ' + row.state}">
+                </datalist>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="inputPerson" aria-describedby="emailHelp"
+                       placeholder="Whom are you going to post about?" th:field="*{about}">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="inputMat" aria-describedby="emailHelp" rows="4" th:field="*{details}"
+                          placeholder="We appreciate you are posting your mat. Your mat will be forever anonymous. Please enter your valuable mat..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit my mat</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
