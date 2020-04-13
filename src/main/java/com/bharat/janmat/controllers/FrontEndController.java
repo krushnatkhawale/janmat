@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +42,6 @@ public class FrontEndController {
         List<Place> collect = Files.lines(Paths.get("indian_cities.csv"))
                 .skip(1)
                 .map(line -> {
-                    System.out.println(line);
                     String[] split = line.split(",");
                     return new Place(split[0], split[1], split[2]);
                 }).collect(Collectors.toList());
