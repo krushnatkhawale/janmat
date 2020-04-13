@@ -12,21 +12,27 @@
 <div class="container-fluid">
     <h1><img src="images/favicon.ico"/> Janmat - People's opinion for peoples benefit</h1>
     <div class="jumbotron">
-        <p class="lead">Total mat: <span th:text="${mats.size()}"></span></p>
+        <p class="">Total mat: <span th:text="${mats.size()}"></span></p>
     </div>
-    <a href="postmat">Post your mat</a>
-    <table class="table">
-        <tr>
-            <th>City</th>
-            <th>About</th>
-            <th>Details</th>
-        </tr>
-        <tr th:each="mat : ${mats}">
-            <td th:text="${mat.city}"></td>
-            <td th:text="${mat.about}"></td>
-            <td th:text="${mat.details}"></td>
-        </tr>
-    </table>
+    <div>
+        <a class="badge badge-success" href="postmat">Post your mat</a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4" th:each="mat : ${mats}">
+                <article class="card">
+                    <header>
+                        <p class="card-header font-weight-bold" th:text="${mat.about}"></p>
+                    </header>
+                    <div class="card-body">
+                        <p class=""
+                           th:text="${ mat.details.length() < 200 ? mat.details : mat.details.substring(0, 200) + '...' }"></p>
+                    </div>
+                    <footer class="card-footer text-right" th:text="${mat.postedOn}"></footer>
+                </article>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
