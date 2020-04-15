@@ -1,3 +1,15 @@
 .container-fluid h1{
     border-bottom: 1px solid black;
 }
+
+.up-icon{
+    color: teal;
+}
+
+.down-icon{
+    color: pink;
+}
+
+.comment-icon{
+    color: grey;
+}
