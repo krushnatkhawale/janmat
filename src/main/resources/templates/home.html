@@ -13,23 +13,23 @@
 <body>
 <div class="container-fluid">
     <h1><img src="images/favicon.ico"/> Janmat - People's opinion for peoples benefit</h1>
-    <div class="jumbotron">
+    <div class="analytics">
         <p class="">Total mat: <span th:text="${mats.size()}"></span></p>
     </div>
-    <div>
-        <a class="badge badge-success" href="postmat">Post your mat</a>
+    <div class="text-center">
+        <a class="btn badge-success mt-2" href="postmat">Post your mat</a>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-sm-4" th:each="mat : ${mats}">
+            <div class="col-sm-4  mt-3" th:each="mat : ${mats}">
                 <article class="card">
                     <header class="card-header">
                         <strong th:text="${mat.about}">
                         </strong>, <span th:text="${mat.city}"></span>
                     </header>
                     <div class="card-body">
-                        <span class="text-right"
-                              th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></span>
+                        <p class="text-right"
+                              th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></p>
                         <p class="text-justify"
                            th:text="${ mat.details.length() < 200 ? mat.details : mat.details.substring(0, 200) + '...' }"></p>
                         <i class="fa fa-thumbs-up w-25 up-icon"> 100 </i>
