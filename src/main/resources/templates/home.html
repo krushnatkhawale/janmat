@@ -29,7 +29,7 @@
                         <p class=""
                            th:text="${ mat.details.length() < 200 ? mat.details : mat.details.substring(0, 200) + '...' }"></p>
                     </div>
-                    <footer class="card-footer text-right" th:text="${mat.postedOn}"></footer>
+                    <footer class="card-footer text-right" th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></footer>
                 </article>
             </div>
         </div>
