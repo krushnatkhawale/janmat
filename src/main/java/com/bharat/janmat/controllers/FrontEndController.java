@@ -30,6 +30,11 @@ public class FrontEndController {
     }
 
     @GetMapping("/")
+    public String temp(Model model) {
+        return "temp";
+    }
+
+    @GetMapping("/home")
     public String home(Model model) {
         List<Mat> mats = matService.findAll();
         model.addAttribute("mats", mats);

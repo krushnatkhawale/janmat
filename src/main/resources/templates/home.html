@@ -29,11 +29,20 @@
                         <p class=""
                            th:text="${ mat.details.length() < 200 ? mat.details : mat.details.substring(0, 200) + '...' }"></p>
                     </div>
-                    <footer class="card-footer text-right" th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></footer>
+                    <footer class="card-footer text-right" th:on=""
+                            th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></footer>
+                    <footer class="card-footer text-right" th:text="${mat.postedOn}"></footer>
                 </article>
             </div>
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+
+var users = /*[[${mat.postedOn}]]*/ 'User Name';
+console.log('HWHWHHW22');
+console.log(users);
+
+</script>
 </body>
 </html>
