@@ -8,16 +8,29 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
 <div class="container-fluid">
-    <h1><img src="images/favicon.ico"/> Janmat - People's opinion for peoples benefit</h1>
-    <div class="analytics">
-        <p class="">Total mat: <span th:text="${mats.size()}"></span></p>
+    <div class="card mb-3 row">
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                <img src="images/people-flag.png" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <div class="col-12 h1">Janmat - People's opinion for peoples benefit</div>
+                    <div class="col-4">Total visits: 9999999</div>
+                    <div class="col-4">State posts     : <span th:text="${mats.size()}"></span></div>
+                    <div class="col-4">District posts  : <span th:text="${mats.size()}"></span></div>
+                    <div class="col-4">City posts      : <span th:text="${mats.size()}"></span></div>
+                    <div class="col-4">Individual posts: <span th:text="${mats.size()}"></span></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="text-center">
         <a class="btn badge-success mt-2" href="postmat">Post your mat</a>
+        <div class=""><small class="text-muted">Last updated 3 mins ago</small></div>
     </div>
     <div class="container">
         <div class="row">
@@ -25,11 +38,11 @@
                 <article class="card">
                     <header class="card-header">
                         <strong th:text="${mat.about}">
-                        </strong>, <span th:text="${mat.city}"></span>
+                        </strong>, <span class="text-muted" th:text="${mat.city}"></span>
                     </header>
                     <div class="card-body">
                         <p class="text-right"
-                              th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></p>
+                           th:text="${mat.postedOn.toString().substring(0, mat.postedOn.toString().indexOf('T'))}"></p>
                         <p class="text-justify"
                            th:text="${ mat.details.length() < 200 ? mat.details : mat.details.substring(0, 200) + '...' }"></p>
                         <i class="fa fa-thumbs-up w-25 up-icon"> 100 </i>
