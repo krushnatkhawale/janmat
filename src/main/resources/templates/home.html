@@ -18,19 +18,20 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <div class="col-12 h1">Janmat - People's opinion for peoples benefit</div>
-                    <div class="col-4">Total visits: 9999999</div>
-                    <div class="col-4">State posts     : <span th:text="${mats.size()}"></span></div>
-                    <div class="col-4">District posts  : <span th:text="${mats.size()}"></span></div>
-                    <div class="col-4">City posts      : <span th:text="${mats.size()}"></span></div>
-                    <div class="col-4">Individual posts: <span th:text="${mats.size()}"></span></div>
+                    <div class="row">
+                        <div class="row h1">Janmat: People's opinion for peoples benefit</div>
+                        <div class="col-4">Total visits: 9999999</div>
+                        <div class="col-4">State posts : <span th:text="${mats.size()}"></span></div>
+                        <div class="col-4">District posts : <span th:text="${mats.size()}"></span></div>
+                        <div class="col-4">City posts : <span th:text="${mats.size()}"></span></div>
+                        <div class="col-4">Individual posts: <span th:text="${mats.size()}"></span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="text-center">
         <a class="btn badge-success mt-2" href="postmat">Post your mat</a>
-        <div class=""><small class="text-muted">Last updated 3 mins ago</small></div>
     </div>
     <div class="container">
         <div class="row">
