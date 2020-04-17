@@ -40,8 +40,8 @@ public class LocationClient {
             if (statusCode.equals(HttpStatus.OK)) {
                 final JsonNode resultNode = responseEntity.getBody();
                 final String result = resultNode.get("city").asText();
+                locations.put(clientIp, resultNode.toString());
                 LOGGER.info("New ip request: {}: {}: {}", clientIp, ((HttpServletRequest) servletRequest).getRequestURL(), locations.get(clientIp));
-                locations.put(clientIp, result);
                 return "SUCCESS";
             } else {
                 return "Unknown";
