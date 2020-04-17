@@ -20,18 +20,24 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="row h1">Janmat: People's opinion for peoples benefit</div>
-                        <div class="col-4">Total visits: 9999999</div>
-                        <div class="col-4">State posts : <span th:text="${mats.size()}"></span></div>
-                        <div class="col-4">District posts : <span th:text="${mats.size()}"></span></div>
-                        <div class="col-4">City posts : <span th:text="${mats.size()}"></span></div>
-                        <div class="col-4">Individual posts: <span th:text="${mats.size()}"></span></div>
+                        <div class="col-12 empty">
+                            <small class="text-muted">
+                                What you want matters, what you think matters.. Make your voice heard..
+                            </small>
+                        </div>
+                        <div class="col-4"><a class="btn" href="" th:text="'Total visits: '+ ${ mats.size() }"></a>
+                        </div>
+                        <div class="col-4"><a class="btn" href="" th:text="'State posts :'+ ${ mats.size() }"></a></div>
+                        <div class="col-4"><a class="btn" href="" th:text="'District posts: '+ ${ mats.size() }"></a>
+                        </div>
+                        <div class="col-4"><a class="btn" href="" th:text="'City posts: '+ ${ mats.size() }"></a></div>
+                        <div class="col-4"><a class="btn" href="" th:text="'Individual posts: '+ ${ mats.size() }"></a>
+                        </div>
+                        <div class="col-4"><a class="btn badge-success" href="postmat">Post your mat</a></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-        <a class="btn badge-success mt-2" href="postmat">Post your mat</a>
     </div>
     <div class="container">
         <div class="row">

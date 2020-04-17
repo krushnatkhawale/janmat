@@ -8,8 +8,8 @@
    background-color: #e9ecef;
 }
 
-.sameline{
-    display:inline;
+.empty{
+   padding: 1rem 0rem;
 }
 .up-icon{
     color: teal;
