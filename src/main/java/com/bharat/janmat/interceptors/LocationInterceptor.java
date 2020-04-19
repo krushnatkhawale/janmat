@@ -18,7 +18,7 @@ public class LocationInterceptor implements Filter {
 
     public LocationInterceptor(LocationClient locationClient) {
         this.locationClient = locationClient;
-        this.validPaths = asList("/", "home", "postmat", "favicon.ico", "css/home.css", "images/people-flag.png");
+        this.validPaths = asList("", "images/under-construction.jpg", "home", "postmat", "favicon.ico", "css/home.css", "images/people-flag.png");
     }
 
     @Override
