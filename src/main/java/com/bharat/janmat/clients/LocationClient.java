@@ -1,6 +1,7 @@
 package com.bharat.janmat.clients;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,9 +30,10 @@ public class LocationClient {
         this.locationServiceURL = locationServiceURL;
     }
 
-    public String getLocation(final ServletRequest servletRequest) {
+    public String process(final ServletRequest servletRequest) {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         final String clientIp = getClientIp(httpServletRequest);
+        final String requestURL = httpServletRequest.getRequestURL().toString();
         if (isNull(locations.get(clientIp))) {
             final String url = locationServiceURL + clientIp;
             final ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(url, JsonNode.class);
@@ -39,15 +41,18 @@ public class LocationClient {
 
             if (statusCode.equals(HttpStatus.OK)) {
                 final JsonNode resultNode = responseEntity.getBody();
+                ((ObjectNode) resultNode).put("url", requestURL);
+                ((ObjectNode) resultNode).remove("metro_code");
                 final String result = resultNode.get("city").asText();
                 locations.put(clientIp, resultNode.toString());
-                LOGGER.info("New ip request: {}: {}: {}", clientIp, ((HttpServletRequest) servletRequest).getRequestURL(), locations.get(clientIp));
+                LOGGER.info("New ip: {}: ", locations.get(clientIp));
                 return "SUCCESS";
             } else {
+                LOGGER.warn("New ip: {}: Couldn't retreive location info: {}", clientIp, requestURL);
                 return "Unknown";
             }
         } else {
-            LOGGER.info("Existing ip request: {}: {}: {}", clientIp, ((HttpServletRequest) servletRequest).getRequestURL(), locations.get(clientIp));
+            LOGGER.info("Existing ip: {}", locations.get(clientIp));
             return "Unknown";
         }
     }
