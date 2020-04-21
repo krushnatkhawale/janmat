@@ -8,6 +8,7 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ public class AppConfig {
     }
 
     @Bean
-    public ServletWebServerFactory servletWebServerFactory() {
+    public ServletWebServerFactory servletWebServerFactory(@Value("${server.port:8443}") Integer serverPort) {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
             protected void postProcessContext(Context context) {
@@ -43,16 +44,16 @@ public class AppConfig {
             }
         };
 
-        tomcat.addAdditionalTomcatConnectors(httpToHttpsConnector());
+        tomcat.addAdditionalTomcatConnectors(httpToHttpsConnector(serverPort));
         return tomcat;
     }
 
-    private Connector httpToHttpsConnector() {
+    private Connector httpToHttpsConnector(Integer serverPort) {
         final Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(false);
-        connector.setRedirectPort(8443);
+        connector.setRedirectPort(serverPort);
         return connector;
     }
 }

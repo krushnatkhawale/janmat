@@ -1,6 +1,7 @@
 package com.bharat.janmat.clients;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletRequest;
@@ -24,36 +26,32 @@ public class LocationClient {
     private static final HashMap<String, String> locations = new HashMap<>();
     private RestTemplate restTemplate;
     private String locationServiceURL;
+    private ObjectMapper objectMapper;
 
-    public LocationClient(@Value("${location.client:https://freegeoip.app/json/}") String locationServiceURL) {
+    public LocationClient(@Value("${location.service:http://localhost:9091/processLocation}") String locationServiceURL, final ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         this.restTemplate = new RestTemplate();
         this.locationServiceURL = locationServiceURL;
     }
 
-    public String process(final ServletRequest servletRequest) {
+    public void process(final ServletRequest servletRequest) {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         final String clientIp = getClientIp(httpServletRequest);
         final String requestURL = httpServletRequest.getRequestURL().toString();
-        if (isNull(locations.get(clientIp))) {
-            final String url = locationServiceURL + clientIp;
-            final ResponseEntity<JsonNode> responseEntity = restTemplate.getForEntity(url, JsonNode.class);
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("ip", clientIp);
+        objectNode.put("url", requestURL);
+
+        try {
+            final ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(locationServiceURL, objectNode, JsonNode.class);
             final HttpStatus statusCode = responseEntity.getStatusCode();
 
-            if (statusCode.equals(HttpStatus.OK)) {
-                final JsonNode resultNode = responseEntity.getBody();
-                ((ObjectNode) resultNode).put("url", requestURL);
-                ((ObjectNode) resultNode).remove("metro_code");
-                final String result = resultNode.get("city").asText();
-                locations.put(clientIp, resultNode.toString());
-                LOGGER.info("New ip: {}: ", locations.get(clientIp));
-                return "SUCCESS";
-            } else {
-                LOGGER.warn("New ip: {}: Couldn't retreive location info: {}", clientIp, requestURL);
-                return "Unknown";
+            if (!statusCode.equals(HttpStatus.OK)) {
+                LOGGER.warn("Location service response was: {}: might be down, please check: {}", statusCode.value(), locationServiceURL);
             }
-        } else {
-            LOGGER.info("Existing ip: {}", locations.get(clientIp));
-            return "Unknown";
+        } catch (ResourceAccessException e) {
+            LOGGER.error("Unable to call location service: {}, Certificate issue: {}", locationServiceURL, e.getMessage());
         }
     }
 
